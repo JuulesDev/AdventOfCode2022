@@ -1,7 +1,4 @@
 move_scores = {
-    'X': 1,
-    'Y': 2,
-    'Z': 3,
     'A': 1,
     'B': 2,
     'C': 3
@@ -14,19 +11,17 @@ if __name__ == '__main__':
         for line in file.readlines():
             content = line.strip().split()
 
-            me = move_scores[content[1]]
             elf = move_scores[content[0]]
+            result_wanted = content[1]
 
-            current_score = me
-
-            result_match = me - elf
-            if result_match == 0: # Draw
-                current_score += 3
-            elif result_match in [1, -2]: # I win
-                current_score += 6
-            # Else, i lost
-
-            total_score += current_score
+            if result_wanted == 'Y': # Draw (= same move as the elf)
+                total_score += elf + 3 
+            elif result_wanted == 'Z': # Win
+                me = (elf % 3) + 1
+                total_score += me + 6 
+            else: # Lose
+                me = ((1 + elf) % 3) + 1
+                total_score += me
 
     print(total_score)
 
